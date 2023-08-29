@@ -18,8 +18,11 @@ describe('Testes da Funcionalidade Usuários', () => {
      cy.request({
           method: 'GET',
           url: 'usuarios'
-      }) 
-    });
+      }).then((response)=>{
+        expect(response.status).to.equal(200) 
+    })
+})
+
 
     it('Deve cadastrar um usuário com sucesso', () => {
      let email = `ebac${Math.floor(Math.random() * 10000)}@gmail.com`
@@ -39,8 +42,8 @@ describe('Testes da Funcionalidade Usuários', () => {
     });
 
     it('Deve validar um usuário com email inválido', () => {
-     cy.cadastrarUsuario('teste','ebac6221@gmail.com', '1234', 'false').then((response)=>{
-          expect(response.body.message).to.equal('Este email já está sendo usado')
+     cy.cadastrarUsuario('teste','gmail.com', '1234', 'false').then((response)=>{
+          expect(response.body.email).to.equal('email deve ser um email válido')
           expect(response.status).to.equal(400)
      }) 
     });
@@ -81,4 +84,4 @@ describe('Testes da Funcionalidade Usuários', () => {
     });
 
 
-});
+})
